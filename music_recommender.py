@@ -100,9 +100,7 @@ def getRec(data, currentuser):
     return reclist
 
 
-
-
-
+# Run the ongoing part of the program
 
 readFile("musicrecplus.txt")
 username = checkUser()
