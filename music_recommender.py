@@ -98,6 +98,18 @@ def enterPreferences(username):
             artists.append(artist.title())
             continue
 
+def deletePreferences(username):
+    """
+    Input: The username of the current user 
+    Output: Deletes and updates the current preferences of the user. 
+    Writer: Isabelle 
+    """
+    preferences = data[username] 
+    print("These are your current artists: " , data[username])
+    delete= input("Enter the name of the artist you want to delete.")
+    preferences.remove(delete)
+    return data.update({username: preferences})
+
 def similarprefs(randuser, currentuser):
     """
     Input: 2 different usernames
