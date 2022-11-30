@@ -138,6 +138,10 @@ def getRec(data, currentuser):
             mostsim = numsim
             mostsimuser = user
 
+    if (mostsimuser == ""):
+        print("No recommendations available at this time.")
+        return []
+
     reclist = []
 
     for artist in list(data[mostsimuser]):#returns a list of recommended artists not including the ones in the current users prefences
