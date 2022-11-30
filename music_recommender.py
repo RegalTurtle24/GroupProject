@@ -201,6 +201,28 @@ def popularArtist():
 
     return mostpopular
 
+def howPopular():
+    """
+    Input: Nothing, but takes into account of all the data. 
+    Output: The number of likes the most popular artist received. 
+    Writer: Isabelle
+    """
+    listOfArtists= [] #will have all the user's artists, excluding the private users 
+    for user in data.keys(): 
+        if ("$" in user):
+            continue
+        else:
+            listOfArtists += data[user]
+    if data== {}:
+        print("Sorry, no artists found") #if there are no artists in data 
+    mostPopularArtists= popularArtist() #will create a variable list that has the top three artists using the popularArtist function
+    mostPopular= mostPopularArtists[0] #creates a variable (string) that has the most popular artist
+    likes = 0 
+    for artist in listOfArtists: #iterates through all the artists and checks to see how many times that artist appears to tally the likes. 
+        if artist == mostPopular:
+            likes += 1
+    print(likes)
+    return likes
 
 """
 Run the ongoing part of the program
