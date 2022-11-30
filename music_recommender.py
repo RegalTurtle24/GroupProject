@@ -104,7 +104,7 @@ def similarprefs(randuser, currentuser):
     count = 0
     randuserartist = data[randuser]#creates a list of artists from the random user
     curruserartist = data[currentuser]
-    if(randuserartist==curruserartist):#cant have the same artists
+    if(randuserartist >= curruserartist):#cant have the same artists
         return 0
     for artist in randuserartist:#counts similar artists
         if(artist in curruserartist):
