@@ -3,6 +3,13 @@ import os.path
 data = {}
 
 def readFile(filepath):
+    """
+    Input: the file name to be opened and read
+    Output: loads the file into global dictionary data
+    Takes a file and unloads the information in the file out into dictionary data. If no file exists, 
+        create an empty file and close it
+    Writer: Dominic/Thys
+    """
     if(os.path.exists(filepath)):
         with open(filepath, "r") as f:
             for line in f:
@@ -19,6 +26,7 @@ def writeFile(fileName, dictionary):
     Input: A file name to write into and a dictionary with the data to right
     Output: Writes the data from the dictionary into the file in accordance with the format "username:Artist1,Artist2,Artist3"
     Writes from a given dictionary into the given file
+    Writer: Thys
     """
     file = open(fileName, "w")
     
@@ -29,6 +37,13 @@ def writeFile(fileName, dictionary):
     file.close()
 
 def getInput():
+    """
+    Input: From user get a letter to indicate what the program should do
+    Output: Returns the letter to indicate what the program should do
+    Prompts the user for a choice after printing the options, and continues to ask until the user
+        has submitted a proper choice
+    Writer: Dominic
+    """
     correctinputs = ["e", "r", "p", "h", "m", "q"]
     incorrect = True
     while incorrect:
@@ -47,6 +62,12 @@ def getInput():
     return selection
 
 def checkUser():
+    """
+    Input: username from user using input()
+    Output: returns the username the person input
+    Prompts the user for an input, and if the user is new also calls for them to enter their preferences
+    Writer: Dominic
+    """
     username = input("Enter your name (put a $ symbol after your name if you wish your preferences to remain private):\n")
     if(username in data):
         pass
@@ -55,6 +76,14 @@ def checkUser():
     return username
 
 def enterPreferences(username):
+    """
+    Input: The username of the current user
+    Output: Adds the liked artists to the data dictionary in a sorted and correctly capitilized manner
+    Takes in the username and repeatedly asks the user for artists they like until they do not
+        enter an artist, then adds the list of artists to their index in the dictionary sorted and in 
+        title case
+    Writer: Dominic
+    """
     artists = []
     while(True):
         artist = input("Enter an artist that you like (Enter to finish):\n")
@@ -66,6 +95,12 @@ def enterPreferences(username):
             continue
 
 def similarprefs(randuser, currentuser):
+    """
+    Input: 
+    Output: 
+
+    Writer: Dominic
+    """
     count = 0
     randuserartist = data[randuser]#creates a list of artists from the random user
     curruserartist = data[currentuser]
@@ -77,8 +112,19 @@ def similarprefs(randuser, currentuser):
     return count
 
 def getRec(data, currentuser):
+    """
+    Input: dictionary and the current user
+    Output: A list of reccomendations for the current user
+    Taking the dictionary of song preferences, returns recommendations for the current user. If
+        there are no other users, returns an empty list
+    Writer: Dominic
+    """
     userlist = list(data.keys())#creates a list of users from the database
     userlist.remove(currentuser)
+    # Extra credit part 3 done by Thys
+    if (len(userlist) == 0):
+        print("There are no other users to recommend from")
+        return []
     mostsim = 0
     mostsimuser = ""
     for user in userlist:#iterates through the list of users to find the most simliar user to the currentuser
@@ -100,7 +146,10 @@ def getRec(data, currentuser):
     return reclist
 
 
-# Run the ongoing part of the program
+"""
+Run the ongoing part of the program
+Writer: Thys
+"""
 
 readFile("musicrecplus.txt")
 username = checkUser()
@@ -111,7 +160,8 @@ while(True):
         enterPreferences(username)
     elif(selection == "r"):
         recs = getRec(data, username)
-        print( reduce (lambda s1, s2: s1 + "\n" + s2, recs) )
+        if(len(recs) == 0):
+            print( reduce (lambda s1, s2: s1 + "\n" + s2, recs) )
     elif(selection == "p"):
         pass
     elif(selection == "h"):
