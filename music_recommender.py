@@ -237,7 +237,7 @@ def userwithmostlikes():
             if(len(data[user]) > mostlikes):#finds user with most likes
                 mostlikes = len(data[user])
                 person = [user]
-            if(len(data[user]) == mostlikes):
+            elif(len(data[user]) == mostlikes):
                 person += [user]
     return person
 
@@ -247,7 +247,7 @@ Writer: Thys
 """
 
 readFile("musicrecplus.txt")
-#readFile("musicrecplus_ex1.txt")
+#readFile("musicrecplus_ex2_a.txt")
 username = checkUser()
 
 while(True):
@@ -263,9 +263,7 @@ while(True):
         for artist in popular:
             print(artist)
     elif(selection == "h"):
-        popularity = howPopular()
-        if(popularity != 0):
-            print(popularity)
+        howPopular()
     elif(selection == "m"):
         users = userwithmostlikes()
         if(len(users) == 0):
