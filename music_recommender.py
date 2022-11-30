@@ -96,15 +96,15 @@ def enterPreferences(username):
 
 def similarprefs(randuser, currentuser):
     """
-    Input: 
-    Output: 
-
+    Input: 2 different usernames
+    Output: Returns the number of artists in common between the users
+    Returns the number of shared artists between 2 users, or 0 if the two users have the exact same lists
     Writer: Dominic
     """
     count = 0
     randuserartist = data[randuser]#creates a list of artists from the random user
     curruserartist = data[currentuser]
-    if(randuserartist==curruserartist):#cant have the same artists
+    if(randuserartist >= curruserartist):#cant have the same artists
         return 0
     for artist in randuserartist:#counts similar artists
         if(artist in curruserartist):
@@ -127,6 +127,7 @@ def getRec(data, currentuser):
         return []
     mostsim = 0
     mostsimuser = ""
+
     for user in userlist:#iterates through the list of users to find the most simliar user to the currentuser
         if("$" in user):
             continue
@@ -138,6 +139,7 @@ def getRec(data, currentuser):
             mostsimuser = user
 
     reclist = []
+
     for artist in list(data[mostsimuser]):#returns a list of recommended artists not including the ones in the current users prefences
         if(artist in list(data[currentuser])):
             continue
@@ -145,13 +147,59 @@ def getRec(data, currentuser):
             reclist.append(artist)
     return reclist
 
+def popularArtist():
+    """
+    Input: 
+    Output: 
+
+    Writer: Dominic
+    """
+    listofartists = []
+    for user in data.keys():#removes the privated users from the pool
+        if("$" in user):
+            continue
+        else:
+            listofartists += data[user]
+    allartists = set(listofartists)#turns list into a set to remove duplicates
+    artistslikes = []
+    def likecounter(currartists, listofartists):#counts the artists number of likes
+        likes = 0
+        for i in listofartists:
+            if(i==currartists):
+                likes+=1
+        return [currartists, likes-1]
+    for artist in allartists:#creates a list of artists and their likes
+        artistslikes += [likecounter(artist, listofartists)]
+    mostpopular = []
+    def getmostpopular(artistslikes, mostlikes):#gets the most popular artists out of a list of lists
+        person = ""
+        index = 0
+        for i in range(len(artistslikes)):
+            if (artistslikes[i][1] > mostlikes):
+                person = artistslikes[i][0]
+                index = i
+                mostlikes = artistslikes[i][1]
+        return [person, index]
+
+    while(len(mostpopular)!=3):#gets a list of three most popular artists
+        person = getmostpopular(artistslikes, 0)[0]
+        index = getmostpopular(artistslikes, 0)[1]
+        mostpopular.append(person)
+        artistslikes.pop(index)
+
+    while('' in mostpopular):#removes any empty elements
+        mostpopular.remove('')
+
+    return mostpopular
+
 
 """
 Run the ongoing part of the program
 Writer: Thys
 """
 
-readFile("musicrecplus.txt")
+#readFile("musicrecplus.txt")
+readFile("musicrecplus_ex1.txt")
 username = checkUser()
 
 while(True):
@@ -160,10 +208,13 @@ while(True):
         enterPreferences(username)
     elif(selection == "r"):
         recs = getRec(data, username)
-        if(len(recs) == 0):
+        if(len(recs) != 0):
             print( reduce (lambda s1, s2: s1 + "\n" + s2, recs) )
     elif(selection == "p"):
-        pass
+        popular = popularArtist()
+        print(popular)
+        for artist in popular:
+            print(artist)
     elif(selection == "h"):
         pass
     elif(selection == "m"):
