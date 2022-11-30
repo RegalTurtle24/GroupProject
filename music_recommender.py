@@ -35,7 +35,13 @@ def writeFile(fileName, dictionary):
     file = open(fileName, "w")
     
     for person in dictionary:
-        userString = person + ":" + reduce(lambda str1, str2: str1 + "," + str2, dictionary[person])
+        artists = dictionary[person]
+        prefix = person + ":"
+        userString = prefix
+        if(len(artists) == 1):
+            userString = prefix + artists[0]
+        if(len(artists) > 1):
+            userString = prefix + reduce(lambda str1, str2: str1 + "," + str2, artists)
         file.write(userString + "\n")
 
     file.close()
@@ -104,17 +110,18 @@ def deletePreferences(username):
     """
     Input
     Output
-    Writer
+    Writer: Isabelle
     """
     preferences = data[username]
     while(True): 
         print("These are your current artists: " , data[username])
-        delete= input("Enter the name of the artist you want to delete.")
+        delete= input("Enter the name of the artist you want to delete.\n")
         if(delete== ""):
+            data[username] = preferences
             break
-        else: 
-            preferences.remove(delete)
-    return data[username]= preferences
+        else:
+            if(delete in preferences):
+                preferences.remove(delete)
 
 def similarprefs(randuser, currentuser):
     """
@@ -298,7 +305,7 @@ while(True):
         else:
             print(prefs)
     elif(selection == "d"):
-        pass
+        deletePreferences(username)
     elif(selection == "q"):
         writeFile("musicrecplus.txt", data)
         break
