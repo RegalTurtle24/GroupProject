@@ -114,7 +114,7 @@ def deletePreferences(username):
             break
         else: 
             preferences.remove(delete)
-    return data.update({username: preferences})
+    return data[username]= preferences
 
 def similarprefs(randuser, currentuser):
     """
