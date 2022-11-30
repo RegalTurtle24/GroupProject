@@ -202,8 +202,8 @@ Run the ongoing part of the program
 Writer: Thys
 """
 
-#readFile("musicrecplus.txt")
-readFile("musicrecplus_ex1.txt")
+readFile("musicrecplus.txt")
+#readFile("musicrecplus_ex1.txt")
 username = checkUser()
 
 while(True):
