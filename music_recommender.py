@@ -1,3 +1,10 @@
+############################################################
+# Name: Thys Vanderschoot, Dominic Catena, Isabelle Villanueva
+# Pledge: I pledge my honor that I have abided by the Stevens Honor System.
+# CS115 Group Project
+# 
+############################################################
+
 from functools import reduce
 import os.path
 data = {}
@@ -8,7 +15,7 @@ def readFile(filepath):
     Output: loads the file into global dictionary data
     Takes a file and unloads the information in the file out into dictionary data. If no file exists, 
         create an empty file and close it
-    Writer: Dominic/Thys
+    Writer: Thys
     """
     global data
 
@@ -52,7 +59,7 @@ def getInput():
     Output: Returns the letter to indicate what the program should do
     Prompts the user for a choice after printing the options, and continues to ask until the user
         has submitted a proper choice
-    Writer: Dominic
+    Writer: Isabelle
     """
     correctinputs = ["e", "r", "p", "h", "m", "q", "s", "d"]
     while True:
@@ -108,8 +115,10 @@ def enterPreferences(username):
 
 def deletePreferences(username):
     """
-    Input
-    Output
+    Input: username for the current user and inputs from user
+    Output: changes data to remove indicated artists
+    Prompts the user to delete artists until the user presses enter, then removes all of those artists from
+        data
     Writer: Isabelle
     """
     preferences = data[username]
@@ -150,7 +159,11 @@ def getRec(data, currentuser):
     """
     userlist = list(data.keys())#creates a list of users from the database
     userlist.remove(currentuser)
-    # Extra credit part 3 done by Thys
+    
+    """
+    Extra credit part 3
+    Writer: thys
+    """
     if (len(userlist) == 0):
         print("There are no other users to recommend from")
         return []
@@ -183,9 +196,9 @@ def getRec(data, currentuser):
 
 def popularArtist():
     """
-    Input: 
-    Output: 
-
+    Input: none
+    Output: List of 3 most popular artists
+    Finds and returns a list of the 3 most popular artists
     Writer: Dominic
     """
     listofartists = []
@@ -196,7 +209,10 @@ def popularArtist():
             listofartists += data[user]
     allartists = set(listofartists)#turns list into a set to remove duplicates
     artistslikes = []
-    def likecounter(currartists, listofartists):#counts the artists number of likes
+    def likecounter(currartists, listofartists):
+        """
+        Counts the artists number of likes
+        """
         likes = 0
         for i in listofartists:
             if(i==currartists):
@@ -205,7 +221,10 @@ def popularArtist():
     for artist in allartists:#creates a list of artists and their likes
         artistslikes += [likecounter(artist, listofartists)]
     mostpopular = []
-    def getmostpopular(artistslikes, mostlikes):#gets the most popular artists out of a list of lists
+    def getmostpopular(artistslikes, mostlikes):
+        """
+        Gets the most popular artists out of a list of lists
+        """
         person = ""
         index = 0
         for i in range(len(artistslikes)):
@@ -233,6 +252,7 @@ def howPopular():
     """
     Input: Nothing, but takes into account of all the data. 
     Output: The number of likes the most popular artist received. 
+    Returns the number of users that like the most popular artist
     Writer: Isabelle
     """
     listOfArtists= [] #will have all the user's artists, excluding the private users 
@@ -255,6 +275,12 @@ def howPopular():
     print(likes)
 
 def userwithmostlikes():
+    """
+    Input: none
+    Output: gives a list of users with the greatest number of liked artists
+    Returns a list of users that had the greatest number of liked artists
+    Writer: Isabelle
+    """
     person = []
     mostlikes = 0
     for user in data.keys():  # removes the privated users from the pool
@@ -274,7 +300,6 @@ Writer: Thys
 """
 
 readFile("musicrecplus.txt")
-#readFile("musicrecplus_ex2_a.txt")
 username = checkUser()
 
 while(True):
