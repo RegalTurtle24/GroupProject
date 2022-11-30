@@ -127,6 +127,7 @@ def getRec(data, currentuser):
         return []
     mostsim = 0
     mostsimuser = ""
+
     for user in userlist:#iterates through the list of users to find the most simliar user to the currentuser
         if("$" in user):
             continue
@@ -138,12 +139,58 @@ def getRec(data, currentuser):
             mostsimuser = user
 
     reclist = []
+
     for artist in list(data[mostsimuser]):#returns a list of recommended artists not including the ones in the current users prefences
         if(artist in list(data[currentuser])):
             continue
         else:
             reclist.append(artist)
     return reclist
+
+def popularArtist():
+    """
+    Input: 
+    Output: 
+
+    Writer: Dominic
+    """
+    listofartists = []
+    for user in data.keys():#removes the privated users from the pool
+        if("$" in user):
+            continue
+        else:
+            listofartists += data[user]
+    allartists = set(listofartists)#turns list into a set to remove duplicates
+    artistslikes = []
+    def likecounter(currartists, listofartists):#counts the artists number of likes
+        likes = 0
+        for i in listofartists:
+            if(i==currartists):
+                likes+=1
+        return [currartists, likes-1]
+    for artist in allartists:#creates a list of artists and their likes
+        artistslikes += [likecounter(artist, listofartists)]
+    mostpopular = []
+    def getmostpopular(artistslikes, mostlikes):#gets the most popular artists out of a list of lists
+        person = ""
+        index = 0
+        for i in range(len(artistslikes)):
+            if (artistslikes[i][1] > mostlikes):
+                person = artistslikes[i][0]
+                index = i
+                mostlikes = artistslikes[i][1]
+        return [person, index]
+
+    while(len(mostpopular)!=3):#gets a list of three most popular artists
+        person = getmostpopular(artistslikes, 0)[0]
+        index = getmostpopular(artistslikes, 0)[1]
+        mostpopular.append(person)
+        artistslikes.pop(index)
+
+    while('' in mostpopular):#removes any empty elements
+        mostpopular.remove('')
+
+    return mostpopular
 
 
 """
