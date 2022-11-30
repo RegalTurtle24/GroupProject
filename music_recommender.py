@@ -46,20 +46,20 @@ def getInput():
         has submitted a proper choice
     Writer: Dominic
     """
-    correctinputs = ["e", "r", "p", "h", "m", "q"]
-    incorrect = True
-    while incorrect:
+    correctinputs = ["e", "r", "p", "h", "m", "q", "s", "d"]
+    while True:
         selection = input("Enter a letter to choose an option:"
                           "\ne - Enter preferences"
                           "\nr - Get recommendations"
                           "\np - Show most popular artists"
                           "\nh - How popular is the most popular"
                           "\nm - Which user has the most likes"
-                          "\nq - save and quit\n")
+                          "\ns - Show preferences"
+                          "\nd - Delete preferences"
+                          "\nq - Save and quit\n")
         if(selection not in correctinputs):
             continue
         else:
-            incorrect = False
             break
     return selection
 
@@ -202,7 +202,7 @@ def popularArtist():
                 mostlikes = artistslikes[i][1]
         return [person, index]
 
-    while(len(mostpopular)!=3):#gets a list of three most popular artists
+    while(len(mostpopular)!=3 and len(artistslikes) != 0):#gets a list of three most popular artists
         person = getmostpopular(artistslikes, 0)[0]
         index = getmostpopular(artistslikes, 0)[1]
         mostpopular.append(person)
@@ -229,15 +229,17 @@ def howPopular():
         else:
             listOfArtists += data[user]
     if data == {}:
-        print("Sorry, no artists found") #if there are no artists in data 
+        print("Sorry, no artists found") #if there are no artists in data
+        return
     mostPopularArtists = popularArtist() #will create a variable list that has the top three artists using the popularArtist function
+    if(len(mostPopularArtists) == 0): 
+        return
     mostPopular = mostPopularArtists[0] #creates a variable (string) that has the most popular artist
     likes = 0 
     for artist in listOfArtists: #iterates through all the artists and checks to see how many times that artist appears to tally the likes. 
         if artist == mostPopular:
             likes += 1
     print(likes)
-    return likes
 
 def userwithmostlikes():
     person = []
@@ -283,6 +285,11 @@ while(True):
         else:
             for user in users:
                 print(user)
+    elif(selection == "s"):
+        prefs = data[username]
+        
+    elif(selection == "d"):
+        pass
     elif(selection == "q"):
         writeFile("musicrecplus.txt", data)
         break
