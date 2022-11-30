@@ -10,6 +10,8 @@ def readFile(filepath):
         create an empty file and close it
     Writer: Dominic/Thys
     """
+    global data
+
     if(os.path.exists(filepath)):
         with open(filepath, "r") as f:
             for line in f:
@@ -84,6 +86,8 @@ def enterPreferences(username):
         title case
     Writer: Dominic
     """
+    global data
+
     artists = []
     while(True):
         artist = input("Enter an artist that you like (Enter to finish):\n")
@@ -125,6 +129,7 @@ def getRec(data, currentuser):
     if (len(userlist) == 0):
         print("There are no other users to recommend from")
         return []
+    
     mostsim = 0
     mostsimuser = ""
 
@@ -171,7 +176,7 @@ def popularArtist():
         for i in listofartists:
             if(i==currartists):
                 likes+=1
-        return [currartists, likes-1]
+        return [currartists, likes]
     for artist in allartists:#creates a list of artists and their likes
         artistslikes += [likecounter(artist, listofartists)]
     mostpopular = []
