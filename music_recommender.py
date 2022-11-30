@@ -96,9 +96,9 @@ def enterPreferences(username):
 
 def similarprefs(randuser, currentuser):
     """
-    Input: 
-    Output: 
-
+    Input: 2 different usernames
+    Output: Returns the number of artists in common between the users
+    Returns the number of shared artists between 2 users, or 0 if the two users have the exact same lists
     Writer: Dominic
     """
     count = 0
@@ -198,7 +198,8 @@ Run the ongoing part of the program
 Writer: Thys
 """
 
-readFile("musicrecplus.txt")
+#readFile("musicrecplus.txt")
+readFile("musicrecplus_ex1.txt")
 username = checkUser()
 
 while(True):
@@ -207,10 +208,13 @@ while(True):
         enterPreferences(username)
     elif(selection == "r"):
         recs = getRec(data, username)
-        if(len(recs) == 0):
+        if(len(recs) != 0):
             print( reduce (lambda s1, s2: s1 + "\n" + s2, recs) )
     elif(selection == "p"):
-        pass
+        popular = popularArtist()
+        print(popular)
+        for artist in popular:
+            print(artist)
     elif(selection == "h"):
         pass
     elif(selection == "m"):
