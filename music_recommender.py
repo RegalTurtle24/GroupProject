@@ -224,6 +224,20 @@ def howPopular():
     print(likes)
     return likes
 
+def userwithmostlikes():
+    person = []
+    mostlikes = 0
+    for user in data.keys():  # removes the privated users from the pool
+        if ("$" in user):
+            continue
+        else:
+            if(len(data[user]) > mostlikes):#finds user with most likes
+                mostlikes = len(data[user])
+                person = [user]
+            if(len(data[user]) == mostlikes):
+                person += [user]
+    return person
+
 """
 Run the ongoing part of the program
 Writer: Thys
@@ -249,7 +263,12 @@ while(True):
     elif(selection == "h"):
         pass
     elif(selection == "m"):
-        pass
+        users = userwithmostlikes()
+        if(len(users) == 0):
+            print("There are no public accounts")
+        else:
+            for user in users:
+                print(user)
     elif(selection == "q"):
         writeFile("musicrecplus.txt", data)
         break
