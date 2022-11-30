@@ -18,6 +18,8 @@ def readFile(filepath):
                 username, artist = line.strip().split((":"))
                 artistlist = artist.split(",")
                 artistlist = list(map(lambda s: s.title(), artistlist))
+                while('' in artistlist):#removes any empty elements
+                    artistlist.remove('')
                 data[username] = sorted(artistlist)
     else:
         myfile = open("musicrecplus.txt", "w")
@@ -291,7 +293,10 @@ while(True):
                 print(user)
     elif(selection == "s"):
         prefs = data[username]
-        
+        if(prefs == []):
+            print("You have no preferences")
+        else:
+            print(prefs)
     elif(selection == "d"):
         pass
     elif(selection == "q"):
